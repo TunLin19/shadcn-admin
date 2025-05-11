@@ -4,7 +4,7 @@ import { BillHistoryRequest, UpdateCustomerRequest } from "./Schema";
 import Cookies from "js-cookie";
 import { showErrorToast } from "../Chitiethoadon/components/components_con/ThongBao";
 
-const API_BASE_URL = 'http://localhost:8080/api/admin/banhang';
+const API_BASE_URL = 'https://server-hopestar.onrender.com/api/admin/banhang';
 
 
 export const getAllBill = async () => {
@@ -304,7 +304,7 @@ export const addBillHistory = async (billHistory: BillHistoryRequest) => {
     try {
         if (!jwt) throw new Error('Nhân viên chưa đăng nhập');
         const response = await axios.post(
-            `http://localhost:8080/api/admin/bill/addBillHistory`,
+            `https://server-hopestar.onrender.com/api/admin/bill/addBillHistory`,
             billHistory,
             {
                 headers: {

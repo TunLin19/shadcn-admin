@@ -1,12 +1,13 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import * as z from 'zod'
 import axios from 'axios'
+import Cookies from 'js-cookie'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Row } from '@tanstack/react-table'
-//import { MoreHorizontal, Pen } from 'lucide-react'
 import { Pen } from 'lucide-react'
 import { toast } from 'sonner'
+//import { MoreHorizontal, Pen } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import {
@@ -38,7 +39,6 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { TaiKhoan } from '../schema/schema'
-import Cookies from 'js-cookie'
 
 // Province/city type definitions
 interface Province {
@@ -193,7 +193,7 @@ export function DataTableRowActions({
     setIsLoading(true)
     try {
       const response = await axios.get(
-        `http://localhost:8080/api/account/get/${account.id}`,
+        `https://server-hopestar.onrender.com/api/account/get/${account.id}`,
         {
           headers: {
             Authorization: `Bearer ${Cookies.get('jwt')}`,
@@ -322,7 +322,7 @@ export function DataTableRowActions({
     setIsUpdating(true)
     try {
       const response = await axios.put(
-        `http://localhost:8080/api/account/update/${account.id}`,
+        `https://server-hopestar.onrender.com/api/account/update/${account.id}`,
         {
           fullName: values.fullName,
           email: values.email,
@@ -443,10 +443,13 @@ export function DataTableRowActions({
         </DropdownMenuContent>
       </DropdownMenu> */}
       {/* Thay thế dropdown menu bằng nút bấm */}
-      <Button variant='outline' onClick={() => setIsDialogOpen(true)}className="flex items-center gap-2 bg-yellow-500 hover:bg-yellow-600 hover:text-white"
-        size="sm"
+      <Button
+        variant='outline'
+        onClick={() => setIsDialogOpen(true)}
+        className='flex items-center gap-2 bg-yellow-500 hover:bg-yellow-600 hover:text-white'
+        size='sm'
       >
-        <Pen className="h-4 w-4" color='white'/>
+        <Pen className='h-4 w-4' color='white' />
       </Button>
 
       <DialogContent className='max-h-[80vh] max-w-[60vw] overflow-y-auto'>
@@ -709,7 +712,9 @@ export function DataTableRowActions({
                           </Form>
                         ) : (
                           <div className='flex items-center justify-between'>
-                            <span className='text-sm'>{field.value || 'Chưa có địa chỉ'}</span>
+                            <span className='text-sm'>
+                              {field.value || 'Chưa có địa chỉ'}
+                            </span>
                             <Button
                               variant='outline'
                               onClick={handleChangeAddress}

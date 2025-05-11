@@ -2,7 +2,7 @@ import Cookies from 'js-cookie';
 import { Color } from './schema';
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:8080/api/admin';
+const API_BASE_URL = 'https://server-hopestar.onrender.com/api/admin';
 
 export const getColor = async () => {
   const jwt = Cookies.get('jwt')

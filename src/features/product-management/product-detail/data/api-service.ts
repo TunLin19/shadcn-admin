@@ -3,7 +3,7 @@ import { ProductDetailResponse, ProductDetailUpdate } from './schema'
 import {ProductImeiRequest} from '../../../product-management/product/data/schema'
 import Cookies from 'js-cookie'
 
-const API_BASE_URL = 'http://localhost:8080/api/admin/product-detail'
+const API_BASE_URL = 'https://server-hopestar.onrender.com/api/admin/product-detail'
 
 export const updateStatus = async (productDetail: ProductDetailResponse) => {
   const jwt = Cookies.get('jwt')
@@ -63,7 +63,7 @@ export const importExcelProductDetail = async (idProduct: number, file: File) =>
 
   try {
     const response = await axios.post(
-      'http://localhost:8080/api/admin/product-detail/import-excel',
+      'https://server-hopestar.onrender.com/api/admin/product-detail/import-excel',
       formData,
       {
         headers: {

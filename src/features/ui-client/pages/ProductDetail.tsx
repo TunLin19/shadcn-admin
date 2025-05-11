@@ -256,7 +256,7 @@ export default function ProductDetail() {
         headers['Authorization'] = `Bearer ${jwt}`;
       }
 
-      const response = await fetch(`http://localhost:8080/api/product-reviews/${currentProductDetail?.productDetailId}`, {
+      const response = await fetch(`https://server-hopestar.onrender.com/api/product-reviews/${currentProductDetail?.productDetailId}`, {
         method: 'GET',
         headers: headers
       });

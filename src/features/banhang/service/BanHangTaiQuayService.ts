@@ -5,7 +5,7 @@ import Cookies from 'js-cookie';
 import { fromThatBai } from '../components/components_con/ThongBao';
 import { BillHistoryRequest } from '@/features/hoadon/service/Schema';
 
-const API_BASE_URL = 'http://localhost:8080/api/admin/banhang';
+const API_BASE_URL = 'https://server-hopestar.onrender.com/api/admin/banhang';
 
 // Lấy dữ liệu data top 5 của bill
 export const getData = async () => {
@@ -480,7 +480,7 @@ export const addBillHistory = async (billHistory: BillHistoryRequest) => {
     try {
         if (!jwt) throw new Error('Nhân viên chưa đăng nhập');
         const response = await axios.post(
-            `http://localhost:8080/api/admin/bill/addBillHistory`,
+            `https://server-hopestar.onrender.com/api/admin/bill/addBillHistory`,
             billHistory,
             {
                 headers: {

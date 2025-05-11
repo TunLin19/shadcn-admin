@@ -291,7 +291,7 @@ export default function MyForm() {
   const fetchAccounts = async () => {
     try {
       const response = await axios.get(
-        'http://localhost:8080/api/account/list-nhan-vien',{
+        'https://server-hopestar.onrender.com/api/account/list-nhan-vien',{
           headers: {
             Authorization: `Bearer ${Cookies.get('jwt')}`,
           },
@@ -320,7 +320,7 @@ export default function MyForm() {
       }
 
       const response = await axios.put(
-        `http://localhost:8080/api/account/update-nhan-vien/${account.id}`,
+        `https://server-hopestar.onrender.com/api/account/update-nhan-vien/${account.id}`,
         {
           fullName: account.fullName,
           code: account.code, // Thêm trường code vào payload
@@ -451,7 +451,7 @@ export default function MyForm() {
       };
 
       const response = await axios.post(
-        'http://localhost:8080/api/account/add-nhan-vien',
+        'https://server-hopestar.onrender.com/api/account/add-nhan-vien',
         payload,
         config
       )

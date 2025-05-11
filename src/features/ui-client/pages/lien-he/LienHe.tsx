@@ -75,7 +75,7 @@ export function ContactFormSection() {
     setFormState("loading")
 
     try {
-      const response = await axios.post("http://localhost:8080/lien-he", {
+      const response = await axios.post("https://server-hopestar.onrender.com/lien-he", {
         name: name,
         email: email,
         phone: phone,

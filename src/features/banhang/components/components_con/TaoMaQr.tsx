@@ -32,7 +32,7 @@ const TaoMaQr: React.FC<Props> = ({ searchBill, tongTien, dateTime, handleThanhT
         const encodedDesc = encodeURIComponent(desc);
         const date = encodeURIComponent(format(dateTime, "yyyy-MM-dd HH:mm:ss"));
 
-        const res = await fetch(`http://localhost:8080/api/sepay/check-payment?desc=${encodedDesc}&transaction_date_min=${date}`);
+        const res = await fetch(`https://server-hopestar.onrender.com/api/sepay/check-payment?desc=${encodedDesc}&transaction_date_min=${date}`);
         const data = await res.json();
         console.log('Received response:', data);
 

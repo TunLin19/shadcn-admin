@@ -152,7 +152,7 @@ export default function SaleUI() {
         try {
             // 1. Load danh sách tất cả sản phẩm
             const productsResponse = await axios.get(
-                'http://localhost:8080/api/admin/products',
+                'https://server-hopestar.onrender.com/api/admin/products',
                 getAuthConfig()
             );
             setSelectedSaleProducts(productsResponse.data);
@@ -160,7 +160,7 @@ export default function SaleUI() {
             // 2. Load danh sách sản phẩm và chi tiết đã được chọn cho sale này
             // Thay đổi endpoint này
             const saleProductsResponse = await axios.get(
-                `http://localhost:8080/api/admin/sale/${sale.id}/products`,
+                `https://server-hopestar.onrender.com/api/admin/sale/${sale.id}/products`,
                 getAuthConfig()
             );
 
@@ -179,7 +179,7 @@ export default function SaleUI() {
             // 3. Load chi tiết sản phẩm cho mỗi sản phẩm đã chọn
             const detailsPromises = Array.from(selectedProductIds).map((productId: number) =>
                 axios.get(
-                    `http://localhost:8080/api/admin/product-details/by-product/${productId}`,
+                    `https://server-hopestar.onrender.com/api/admin/product-details/by-product/${productId}`,
                     getAuthConfig()
                 )
             );
@@ -283,7 +283,7 @@ export default function SaleUI() {
             if (isEditing && editId) {
                 // 1. Lấy danh sách sản phẩm chi tiết hiện có trong sale
                 const saleProductsResponse = await axios.get(
-                    `http://localhost:8080/api/admin/sale/${editId}/products`,
+                    `https://server-hopestar.onrender.com/api/admin/sale/${editId}/products`,
                     getAuthConfig()
                 );
                 
@@ -295,7 +295,7 @@ export default function SaleUI() {
                 // 2. Xóa các sản phẩm chi tiết đã bỏ chọn
                 if (detailsToDelete.length > 0) {
                     await axios.delete(
-                        'http://localhost:8080/api/admin/sale/details',
+                        'https://server-hopestar.onrender.com/api/admin/sale/details',
                         {
                             data: { ids: detailsToDelete },
                             ...getAuthConfig()
@@ -313,7 +313,7 @@ export default function SaleUI() {
                 // 4. Thêm các sản phẩm chi tiết mới (nếu có)
                 if (selectedDetails.size > 0) {
                     await axios.post(
-                        'http://localhost:8080/api/admin/sale/assign-products',
+                        'https://server-hopestar.onrender.com/api/admin/sale/assign-products',
                         {
                             saleId: editId,
                             productDetailIds: Array.from(selectedDetails)
@@ -338,7 +338,7 @@ export default function SaleUI() {
             // Bước 2: Thêm sản phẩm chi tiết vào sale
             if (saleId && selectedDetails.size > 0) {
                 await axios.post(
-                    `http://localhost:8080/api/admin/sale/assign-products`,
+                    `https://server-hopestar.onrender.com/api/admin/sale/assign-products`,
                     {
                         saleId: saleId,
                         productDetailIds: Array.from(selectedDetails)
@@ -389,7 +389,7 @@ export default function SaleUI() {
             const jwt = Cookies.get('jwt');
             setLoadingProducts(true);
             const response = await axios.get(
-                'http://localhost:8080/api/admin/products',
+                'https://server-hopestar.onrender.com/api/admin/products',
                 getAuthConfig()
             );
             setSelectedSaleProducts(response.data);
@@ -455,7 +455,7 @@ export default function SaleUI() {
 
     const loadSelectedProducts = async (saleId: number) => {
         try {
-            const response = await axios.get(`http://localhost:8080/api/admin/sale/${saleId}/products`);
+            const response = await axios.get(`https://server-hopestar.onrender.com/api/admin/sale/${saleId}/products`);
             const selectedProductIds: Set<number> = new Set(response.data.map((item: any) => item.productId));
             setSelectedProducts(selectedProductIds);
         } catch (error) {
@@ -472,7 +472,7 @@ export default function SaleUI() {
             newSelectedProducts.add(productId);
             try {
                 const response = await axios.get(
-                    `http://localhost:8080/api/admin/product-details/by-product/${productId}`,
+                    `https://server-hopestar.onrender.com/api/admin/product-details/by-product/${productId}`,
                     getAuthConfig()
                 );
                 
@@ -514,7 +514,7 @@ export default function SaleUI() {
         try {
             setLoadingProducts(true);
             // Use the correct API endpoint
-            const response = await axios.get('http://localhost:8080/api/admin/products');
+            const response = await axios.get('https://server-hopestar.onrender.com/api/admin/products');
             setSelectedSaleProducts(response.data);
         } catch (error) {
             console.error('Error loading sale products:', error);
@@ -560,7 +560,7 @@ export default function SaleUI() {
             setLoading(true);
             // Thêm tất cả sản phẩm chi tiết đã chọn vào chương trình khi nhấn xác nhận
             await axios.post(
-                `http://localhost:8080/api/admin/sale/assign-products`,
+                `https://server-hopestar.onrender.com/api/admin/sale/assign-products`,
                 {
                     saleId: currentSaleId,
                     productDetailIds: currentSelectedDetails
@@ -600,7 +600,7 @@ export default function SaleUI() {
                 const jwt = Cookies.get('jwt');
                 const detailsPromises = Array.from(newSelectedProducts).map(productId =>
                     axios.get(
-                        `http://localhost:8080/api/admin/product-details/by-product/${productId}`,
+                        `https://server-hopestar.onrender.com/api/admin/product-details/by-product/${productId}`,
                         getAuthConfig()
                     )
                 );
@@ -635,7 +635,7 @@ export default function SaleUI() {
                 try {
                     // Gọi API để xóa tất cả sản phẩm chi tiết đã chọn
                     await axios.delete(
-                        'http://localhost:8080/api/admin/sale/details',
+                        'https://server-hopestar.onrender.com/api/admin/sale/details',
                         {
                             data: { ids: Array.from(selectedDetails) },
                             ...getAuthConfig()
@@ -691,7 +691,7 @@ export default function SaleUI() {
     const handleViewDetails = async (productId: number) => {
         try {
           setLoadingProducts(true);
-          const response = await axios.get(`http://localhost:8080/api/admin/product-details/by-product/${productId}`);
+          const response = await axios.get(`https://server-hopestar.onrender.com/api/admin/product-details/by-product/${productId}`);
           setProductDetails(prev => ({
             ...prev,
             [productId]: response.data
@@ -766,7 +766,7 @@ export default function SaleUI() {
             setLoading(true);
             // Assign selected product details to the sale
             await axios.post(
-                `http://localhost:8080/api/admin/sale/assign-products`,
+                `https://server-hopestar.onrender.com/api/admin/sale/assign-products`,
                 {
                     headers: {
                         Authorization: `Bearer ${jwt}`,

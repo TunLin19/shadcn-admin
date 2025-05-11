@@ -79,7 +79,7 @@ const DanhGiaSanPham: React.FC<ProductReviews> = ({ setOpen, open,reviewData, ha
       }
 
       // Sau đó gửi đánh giá
-      const response = await fetch('http://localhost:8080/api/product-reviews/create-product-reviews', {
+      const response = await fetch('https://server-hopestar.onrender.com/api/product-reviews/create-product-reviews', {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${jwt}`,

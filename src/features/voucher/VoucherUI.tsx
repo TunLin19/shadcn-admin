@@ -15,7 +15,7 @@ import Cookies from "js-cookie";
 import { Button } from "@/components/ui/button";
 import { Pen } from "lucide-react";
 // Add API base URL constant
-const API_BASE_URL = 'http://localhost:8080/api';
+const API_BASE_URL = 'https://server-hopestar.onrender.com/api';
 
 // Create an authenticated axios instance
 const authAxios = axios.create({

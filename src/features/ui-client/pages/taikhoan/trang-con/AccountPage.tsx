@@ -234,7 +234,7 @@ export const AccountPage = () => {
       }
       
       const response = await axios.put(
-        `http://localhost:8080/api/account/update-profile`,
+        `https://server-hopestar.onrender.com/api/account/update-profile`,
         payload,
         {
           params: {

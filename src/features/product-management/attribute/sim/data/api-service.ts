@@ -2,7 +2,7 @@ import Cookies from 'js-cookie';
 import { Sim } from './schema';
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:8080/api/admin'; // Thay thế bằng URL của back-end Java của bạn
+const API_BASE_URL = 'https://server-hopestar.onrender.com/api/admin'; // Thay thế bằng URL của back-end Java của bạn
 
 export const getSim = async () => {
   const jwt = Cookies.get('jwt')

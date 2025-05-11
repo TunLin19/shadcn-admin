@@ -2,7 +2,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { toast } from 'react-toastify';
 
-const API_BASE_URL = 'http://localhost:8080/api/admin'; // Thay thế bằng URL của back-end Java của bạn
+const API_BASE_URL = 'https://server-hopestar.onrender.com/api/admin'; // Thay thế bằng URL của back-end Java của bạn
 
 // Add axios interceptor for global error handling
 axios.interceptors.response.use(

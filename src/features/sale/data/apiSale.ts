@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-const API_BASE_URL = 'http://localhost:8080/api/admin/sale';
+const API_BASE_URL = 'https://server-hopestar.onrender.com/api/admin/sale';
 
 export const getSales = async () => {
   const jwt = Cookies.get('jwt'); 
@@ -126,7 +126,7 @@ export const assignProductsToSale = async (saleId: number, productDetailIds: num
 export const getSaleProducts = async () => {
   const jwt = Cookies.get('jwt');
   try {
-    const response = await axios.get('http://localhost:8080/api/admin/products', {
+    const response = await axios.get('https://server-hopestar.onrender.com/api/admin/products', {
       headers: {
         Authorization: `Bearer ${jwt}`,
       },

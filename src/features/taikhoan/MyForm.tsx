@@ -273,7 +273,7 @@ export default function MyForm() {
   const fetchAccounts = async () => {
     try {
       const response = await axios.get(
-        'http://localhost:8080/api/account/list-khach-hang',{
+        'https://server-hopestar.onrender.com/api/account/list-khach-hang',{
           headers: {
             Authorization: `Bearer ${Cookies.get('jwt')}`,
           },
@@ -302,7 +302,7 @@ export default function MyForm() {
       }
 
       const response = await axios.put(
-        `http://localhost:8080/api/account/update/${account.id}`,
+        `https://server-hopestar.onrender.com/api/account/update/${account.id}`,
         {
           fullName: account.fullName,
           email: account.email,
@@ -426,7 +426,7 @@ export default function MyForm() {
       };
 
       const response = await axios.post(
-        'http://localhost:8080/api/account/add',
+        'https://server-hopestar.onrender.com/api/account/add',
         payload,
         config
         

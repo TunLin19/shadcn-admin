@@ -9,7 +9,7 @@ import {
   DropdownTrigger,
   User,
 } from '@heroui/react'
-import { Menu,ShoppingCart } from 'lucide-react'
+import { Menu, ShoppingCart } from 'lucide-react'
 import { getBrandActive } from '@/features/product-management/product/data/api-service'
 import { cn } from '../../../lib/utils'
 import { getProfile } from '../data/api-service'
@@ -28,7 +28,7 @@ import {
 import { Sheet, SheetContent, SheetTrigger } from './ui/sheet'
 
 // Custom event name - must match the one defined in AccountPage.tsx
-const PROFILE_UPDATED_EVENT = 'profile-updated';
+const PROFILE_UPDATED_EVENT = 'profile-updated'
 
 interface Brand {
   id: number
@@ -46,17 +46,17 @@ export default function Navbar() {
     queryKey: ['brands'],
     queryFn: getBrandActive,
   })
-  
+
   useEffect(() => {
     loadProfile()
-    
+
     // Add event listener for profile updates
     const handleProfileUpdated = () => {
       loadProfile()
     }
-    
+
     window.addEventListener(PROFILE_UPDATED_EVENT, handleProfileUpdated)
-    
+
     // Clean up event listener when component unmounts
     return () => {
       window.removeEventListener(PROFILE_UPDATED_EVENT, handleProfileUpdated)
@@ -83,23 +83,6 @@ export default function Navbar() {
     }
   }
 
-  // const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
-  //   if (e.key === 'Enter') {
-  //     // Chỉ navigate khi có giá trị search
-  //     if (searchValue.trim()) {
-  //       navigate({
-  //         to: '/dienthoai',
-  //         search: {
-  //           key: searchValue.trim(),
-  //         },
-  //       })
-  //       // Reset search state
-  //       setSearchValue('')
-  //       setIsSearchOpen(false)
-  //     }
-  //   }
-  // }
-
   const renderUserMenu = () => {
     if (isLoading) {
       return <div className='h-8 w-8 animate-pulse rounded-full bg-muted' />
@@ -114,22 +97,27 @@ export default function Navbar() {
     }
 
     return (
-      <Dropdown placement='bottom-start'>
+      <Dropdown placement='bottom-end'>
         <DropdownTrigger>
           <User
             as='button'
             avatarProps={{
               isBordered: true,
-              src:
-                profile.avatar ||
-                'https://thumbs.dreamstime.com/b/creative-illustration-default-avatar-profile-placeholder-isolated-background-art-design-grey-photo-blank-template-mockup-144857620.jpg',
+              src: profile.avatar || 'default-avatar.jpg',
+              className: 'w-7 h-7 sm:w-8 sm:h-8',
             }}
             className='transition-transform'
-            description={profile.email}
-            name={profile.name}
+            description={
+              <span className='hidden sm:inline'>{profile.email}</span>
+            }
+            name={<span className='text-sm sm:text-base'>{profile.name}</span>}
           />
         </DropdownTrigger>
-        <DropdownMenu aria-label='User Actions' variant='flat'>
+        <DropdownMenu
+          aria-label='User Actions'
+          variant='flat'
+          className='w-56 sm:w-64'
+        >
           <DropdownItem key='profile'>
             <Link href='/taikhoan/thong-tin-ca-nhan'>Thông tin cá nhân</Link>
           </DropdownItem>
@@ -164,16 +152,46 @@ export default function Navbar() {
 
   return (
     <header className='sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60'>
-      <div className='container flex h-16 items-center justify-between'>
-        <div className='flex items-center gap-4 md:gap-10'>
+      <div className='container flex h-14 items-center justify-between px-4 sm:h-16 sm:px-6'>
+        {/* Logo and Mobile Menu */}
+        <div className='flex items-center gap-2 sm:gap-4 md:gap-10'>
           <Link to='/' className='flex items-center space-x-2'>
             <img
               src='/images/favicon.svg'
               alt='HopeStar Logo'
-              className='h-6 w-6'
+              className='h-5 w-5 sm:h-6 sm:w-6'
             />
-            <span className='text-2xl font-bold'>HopeStar</span>
+            <span className='hidden text-xl font-bold sm:inline sm:text-2xl'>
+              HopeStar
+            </span>
           </Link>
+
+          {/* Mobile Menu Button */}
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant='ghost' size='sm' className='md:hidden'>
+                <Menu className='h-5 w-5' />
+                <span className='sr-only'>Open menu</span>
+              </Button>
+            </SheetTrigger>
+            <SheetContent side='left' className='w-[280px] p-0 sm:w-[350px]'>
+              <nav className='flex h-full flex-col'>
+                <div className='border-b p-4'>
+                  <Link to='/' className='flex items-center space-x-2'>
+                    <img
+                      src='/images/favicon.svg'
+                      alt='HopeStar Logo'
+                      className='h-5 w-5'
+                    />
+                    <span className='text-lg font-bold'>HopeStar</span>
+                  </Link>
+                </div>
+                <div className='flex-1 overflow-auto py-4'>
+                  <NavigationMenuMobile brands={brands} />
+                </div>
+              </nav>
+            </SheetContent>
+          </Sheet>
 
           {/* Desktop Navigation */}
           <NavigationMenu className='hidden md:flex'>
@@ -243,70 +261,65 @@ export default function Navbar() {
           </NavigationMenu>
         </div>
 
-        {/* Desktop Actions */}
-        <div className='hidden items-center gap-4 md:flex'>
-          {/* {isSearchOpen ? (
-            <div className='flex items-center'>
-              <Input
-                type='search'
-                placeholder='Tìm kiếm điện thoại...'
-                className='w-[140px] lg:w-[150px]'
-                autoFocus
-                value={searchValue}
-                onChange={(e) => setSearchValue(e.target.value)}
-                onKeyDown={handleSearch}
-              />
-              <Button
-                variant='ghost'
-                size='icon'
-                onClick={() => {
-                  setIsSearchOpen(false)
-                  setSearchValue('')
-                }}
-                className='ml-2'
-              >
-                <X className='h-5 w-5' />
-              </Button>
-            </div>
-          ) : (
-            <Button
-              variant='ghost'
-              size='icon'
-              onClick={() => setIsSearchOpen(true)}
-              aria-label='Search'
-            >
-              <Search className='h-5 w-5' />
-            </Button>
-          )} */}
-          <Button variant='ghost' size='icon' asChild>
-            <Link to='/gio-hang' className='relative'>
-              <ShoppingCart className='h-5 w-5' />
-              <Badge className='absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center'>
+        {/* Actions */}
+        <div className='flex items-center gap-2 sm:gap-4'>
+          <Button variant='ghost' size='icon' asChild className='relative'>
+            <Link to='/gio-hang'>
+              <ShoppingCart className='h-[18px] w-[18px] sm:h-5 sm:w-5' />
+              <Badge className='absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center text-xs sm:h-5 sm:w-5'>
                 {cart?.quantityCartDetail || 0}
               </Badge>
             </Link>
           </Button>
           {renderUserMenu()}
         </div>
-
-        {/* Mobile Menu Trigger */}
-        <div className='flex items-center md:hidden'>
-          <Sheet>
-            <SheetTrigger asChild>
-              <Button variant='ghost' size='icon' aria-label='Menu'>
-                <Menu className='h-5 w-5' />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side='right'>
-              <nav className='grid gap-6 text-lg font-medium'>
-              <Link href='/taikhoan/thong-tin-ca-nhan'>Thông tin cá nhân</Link>
-              <Link href='/taikhoan/don-hang-cua-toi'>Đơn hàng của tôi</Link>
-                
-              </nav>
-            </SheetContent>
-          </Sheet>
-        </div>
       </div>
     </header>
+  )
+}
+
+// Add this new component for mobile navigation
+const NavigationMenuMobile = ({ brands }: { brands: Brand[] | undefined }) => {
+  return (
+    <div className='space-y-4 px-4'>
+      <div className='space-y-1'>
+        <h4 className='mb-3 text-sm font-medium leading-none'>
+          Các hãng điện thoại
+        </h4>
+        <div className='grid grid-cols-2 gap-2'>
+          {brands?.map((brand) => (
+            <Link
+              key={brand.id}
+              to='/dienthoai'
+              search={{ brand: brand.id }}
+              className='flex items-center space-x-2 rounded-md p-2 text-sm hover:bg-accent'
+            >
+              <span>{brand.name}</span>
+            </Link>
+          ))}
+        </div>
+      </div>
+
+      <div className='space-y-3 border-t pt-4'>
+        <Link
+          to='/chinh-sach-cua-cua-hang'
+          className='block px-2 py-1.5 text-sm hover:text-primary'
+        >
+          Chính sách của cửa hàng
+        </Link>
+        <Link
+          to='/tra_cuu_don_hang'
+          className='block px-2 py-1.5 text-sm hover:text-primary'
+        >
+          Tra cứu đơn hàng
+        </Link>
+        <Link
+          to='/lien-he'
+          className='block px-2 py-1.5 text-sm hover:text-primary'
+        >
+          Liên hệ
+        </Link>
+      </div>
+    </div>
   )
 }

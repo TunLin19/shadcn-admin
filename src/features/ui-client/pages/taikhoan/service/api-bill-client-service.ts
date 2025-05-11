@@ -1,7 +1,7 @@
 import axios from 'axios'
 import Cookies from 'js-cookie'
 
-const API_BASE_URL = 'http://localhost:8080/bill/client'
+const API_BASE_URL = 'https://server-hopestar.onrender.com/bill/client'
 
 export const getBillByAccount = async () => {
     const jwt = Cookies.get('jwt')

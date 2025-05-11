@@ -186,7 +186,7 @@ export function DataTableRowActions({
     setIsLoading(true)
     try {
       const response = await axios.get(
-        `http://localhost:8080/api/account/get/${account.id}`,
+        `https://server-hopestar.onrender.com/api/account/get/${account.id}`,
         {
           headers: {
             Authorization: `Bearer ${Cookies.get('jwt')}`,
@@ -315,7 +315,7 @@ export function DataTableRowActions({
     setIsUpdating(true)
     try {
       const response = await axios.put(
-        `http://localhost:8080/api/account/update/${account.id}`,
+        `https://server-hopestar.onrender.com/api/account/update/${account.id}`,
         {
           fullName: values.fullName,
           email: values.email,

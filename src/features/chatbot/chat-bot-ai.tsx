@@ -115,7 +115,7 @@ export default function ChatBotAi() {
 
       const signupData = JSON.parse(localStorage.getItem('profile') || '{}')
       // Call the streaming API
-      const response = await fetch(`http://localhost:8080/chat-ai/stream?message=${encodeURIComponent(inputValue + " " + signupData.name)}`);
+      const response = await fetch(`https://server-hopestar.onrender.com/chat-ai/stream?message=${encodeURIComponent(inputValue + " " + signupData.name)}`);
       
       if (!response.ok) {
         throw new Error("API request failed");

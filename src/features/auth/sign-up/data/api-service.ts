@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Signup } from './schema'
 
-const API_BASE_URL = 'http://localhost:8080'
+const API_BASE_URL = 'https://server-hopestar.onrender.com'
 
 export const signup = async (signup: Signup) => {
   try {

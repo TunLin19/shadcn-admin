@@ -2,7 +2,7 @@ import axios from 'axios';
 import type { Battery } from './schema';
 import Cookies from 'js-cookie';
 
-const API_BASE_URL = 'http://localhost:8080/api/admin';
+const API_BASE_URL = 'https://server-hopestar.onrender.com/api/admin';
 
 export const getBattery = async () => {
   const jwt = Cookies.get('jwt')

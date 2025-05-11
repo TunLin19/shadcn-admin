@@ -123,7 +123,7 @@ export default function Chats() {
 
   // WebSocket connection
   useEffect(() => {
-    const socket = new SockJS('http://localhost:8080/chat')
+    const socket = new SockJS('https://server-hopestar.onrender.com/chat')
     const client = new Client({
       webSocketFactory: () => socket,
       connectHeaders: {
@@ -197,7 +197,7 @@ export default function Chats() {
 
   // Add subscription to admin notifications
   useEffect(() => {
-    const socket = new SockJS('http://localhost:8080/chat')
+    const socket = new SockJS('https://server-hopestar.onrender.com/chat')
     const client = new Client({
       webSocketFactory: () => socket,
       connectHeaders: {

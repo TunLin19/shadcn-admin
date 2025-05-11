@@ -18,7 +18,7 @@ import type {
   DateRangeResponse
 } from '../types';
 
-const API_BASE_URL = 'http://localhost:8080/api/statistics';
+const API_BASE_URL = 'https://server-hopestar.onrender.com/api/statistics';
 
 const getAuthConfig = () => {
   const jwt = Cookies.get('jwt');

@@ -21,7 +21,7 @@ const CustomerChat = ({ isOpen, toggleChat }) => {
   const fetchChatHistory = async (userId:number) => {
     try {
       const response = await axios.get(
-        `http://localhost:8080/api/chat/history?senderId=${userId}&receiverId=${receiverId}`,
+        `https://server-hopestar.onrender.com/api/chat/history?senderId=${userId}&receiverId=${receiverId}`,
         {
           headers: { Authorization: `Bearer ${jwt}` },
         }
@@ -51,7 +51,7 @@ const CustomerChat = ({ isOpen, toggleChat }) => {
   useEffect(() => {
     if (!jwt || !senderId) return
 
-    const socket = new SockJS('http://localhost:8080/chat')
+    const socket = new SockJS('https://server-hopestar.onrender.com/chat')
     const client = new Client({
       webSocketFactory: () => socket,
       connectHeaders: { Authorization: `Bearer ${jwt}` },

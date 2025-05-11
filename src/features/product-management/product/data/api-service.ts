@@ -7,7 +7,7 @@ import {
   SearchProductRequest,
 } from './schema'
 
-const API_BASE_URL = 'http://localhost:8080/api/admin' 
+const API_BASE_URL = 'https://server-hopestar.onrender.com/api/admin' 
 
 export const getProducts = async () => {
   const jwt = Cookies.get('jwt')

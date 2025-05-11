@@ -303,7 +303,7 @@ export function CheckoutPage() {
           )
 
           const response = await axios.post(
-            'http://localhost:8080/apis/v1/payment/create-payment',
+            'https://server-hopestar.onrender.com/apis/v1/payment/create-payment',
             orderData
           )
 
