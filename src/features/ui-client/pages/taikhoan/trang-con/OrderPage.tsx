@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { Card, CardBody, Input, Link, Tab, Tabs } from '@heroui/react'
 import { Icon } from '@iconify/react'
 import { Button } from '@/features/ui-client/components/ui/button'
+import '@/features/ui-client/styles/account.css'
 import { getBillByAccount } from '../service/api-bill-client-service'
 import { Bill } from '../service/schema'
 
 const statusConfig = {
   CHO_XAC_NHAN: { color: '#f5a524', text: 'Chờ xác nhận' },
-  // CHO_THANH_TOAN: { color: '#f5a524', text: 'Chờ xác nhận' },
   DA_XAC_NHAN: { color: '#339999', text: 'Đã xác nhận' },
   DANG_CHUAN_BI_HANG: { color: '#FF0099', text: 'Đang chuẩn bị hàng' },
   DANG_GIAO_HANG: { color: '#007bff', text: 'Đang giao hàng' },
@@ -19,15 +19,19 @@ export const OrdersPage = () => {
   const [selected, setSelected] = React.useState('all')
   const [bills, setBills] = useState<Bill[]>([])
   const [searchKeyword, setSearchKeyword] = useState('')
-  const [displayLimit, setDisplayLimit] = useState(2)
+  const [displayLimit, setDisplayLimit] = useState(5) // Increased initial display
+  const [loading, setLoading] = useState(true)
+
   useEffect(() => {
     const fetchBills = async () => {
       try {
+        setLoading(true)
         const data = await getBillByAccount()
         setBills(data)
-        console.log('Bills:', data)
       } catch (error) {
         console.error('Lỗi lấy bill:', error)
+      } finally {
+        setLoading(false)
       }
     }
 
@@ -36,207 +40,152 @@ export const OrdersPage = () => {
 
   const filteredOrders = bills
     .filter((bill) => {
-      // Lọc theo trạng thái
-      if (selected !== 'all') {
-        if (selected === 'CHO_XAC_NHAN') {
-          if (bill.status !== 'CHO_XAC_NHAN') {
-            return false;
-          }
-        } else if (bill.status !== selected) {
-          return false
-        }
+      if (selected !== 'all' && bill.status !== selected) {
+        return false
       }
 
-      // Lọc theo từ khóa tìm kiếm
-      if (searchKeyword.trim() !== '') {
-        const keyword = searchKeyword.toLowerCase();
-        const matchesCode = bill?.maBill?.toLowerCase().includes(keyword.trim());
-        const matchesProduct = bill?.billDetailResponesList?.some((detail) =>
-          detail.productDetail?.productName?.toLowerCase().includes(keyword)
+      if (searchKeyword.trim()) {
+        const keyword = searchKeyword.toLowerCase().trim()
+        return (
+          bill?.maBill?.toLowerCase().includes(keyword) ||
+          bill?.billDetailResponesList?.some((detail) =>
+            detail.productDetail?.productName?.toLowerCase().includes(keyword)
+          )
         )
-        return matchesCode || matchesProduct
       }
 
       return true
     })
-    .filter(
-      (bill) =>
-        bill.billDetailResponesList && bill.billDetailResponesList.length > 0
+    .filter((bill) => bill.billDetailResponesList?.length > 0)
+
+  const renderOrderCard = (order: Bill) => {
+    const firstProduct = order?.billDetailResponesList?.[0]
+    if (!firstProduct) return null
+
+    return (
+      <Card key={order?.id} className='mt-6'>
+        <CardBody className='space-y-4'>
+          {/* Header */}
+          <div className='flex items-start justify-between border-b border-default-100 pb-4'>
+            <div className='space-y-2'>
+              <div className='flex flex-wrap items-center gap-4 text-sm text-default-600'>
+                <span>
+                  {order?.paymentDate
+                    ? new Date(order.paymentDate).toLocaleDateString('vi-VN', {
+                        year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hour12: false,
+                      })
+                    : ''}
+                </span>
+                <span>Mã đơn hàng: {order?.maBill}</span>
+                <span>{order?.detailCount ?? 0} sản phẩm</span>
+              </div>
+            </div>
+            <div className='flex items-center gap-2 text-sm font-medium'>
+              <span style={{ color: statusConfig[order?.status]?.color }}>
+                •
+              </span>
+              <span style={{ color: statusConfig[order?.status]?.color }}>
+                {statusConfig[order?.status]?.text}
+              </span>
+            </div>
+          </div>
+
+          {/* Product Details */}
+          <div className='flex flex-col justify-between gap-4 md:flex-row md:items-center'>
+            <div className='flex items-center gap-4'>
+              <img
+                src={firstProduct.productDetail?.image}
+                alt={firstProduct.productDetail?.productName}
+                className='h-20 w-20 rounded-lg object-cover'
+              />
+              <div className='flex-1 space-y-1'>
+                <Link
+                  href={`/taikhoan/don-hang-cua-toi/thong-tin?id=${order?.id}`}
+                  className='line-clamp-2 text-sm font-medium hover:text-[#4c7eea]'
+                >
+                  {`${firstProduct.productDetail?.productName} ${firstProduct.productDetail?.ram}/${firstProduct.productDetail?.rom}${firstProduct.productDetail?.descriptionRom} - ${firstProduct.productDetail?.color}`}
+                </Link>
+                <p className='text-sm text-default-500'>
+                  Số lượng: {firstProduct.quantity}
+                </p>
+                <p className='text-sm font-bold'>
+                  {firstProduct.totalPrice?.toLocaleString('vi-VN')} đ
+                </p>
+              </div>
+            </div>
+            <div className='text-right'>
+              <p className='text-lg font-bold text-red-500'>
+                {(order?.totalDue ?? 0).toLocaleString('vi-VN')} đ
+              </p>
+            </div>
+          </div>
+        </CardBody>
+      </Card>
     )
+  }
+
+  if (loading) {
+    return (
+      <div className='loading-spinner'>
+        <div className='spinner' />
+      </div>
+    )
+  }
 
   return (
-    <div>
+    <div className='container py-6'>
       <section className='mx-auto max-w-5xl'>
-        <header className='mb-6 flex items-center justify-between'>
-          <h1 className='text-xl font-bold text-[#333333]'>Đơn hàng của tôi</h1>
+        <header className='order-header'>
+          <h1 className='order-title'>Đơn hàng của tôi</h1>
           <Input
             placeholder='Tìm theo mã đơn hoặc tên sản phẩm'
             startContent={
               <Icon icon='lucide:search' className='text-default-400' />
             }
-            className='w-96'
+            className='search-input'
             value={searchKeyword}
             onChange={(e) => setSearchKeyword(e.target.value)}
           />
         </header>
 
-        <Tabs
-          selectedKey={selected}
-          onSelectionChange={(key) => setSelected(key as string)}
-          color='primary'
-        >
-          <Tab key='all' title='Tất cả' />
-          <Tab key='CHO_XAC_NHAN' title='Chờ xác nhận' />
-          <Tab key='DA_XAC_NHAN' title='Đã xác nhận' />
-          <Tab key='DANG_CHUAN_BI_HANG' title='Đang chuẩn bị hàng' />
-          <Tab key='DANG_GIAO_HANG' title='Đang giao hàng' />
-          <Tab key='HOAN_THANH' title='Hoàn thành' />
-          <Tab key='DA_HUY' title='Đã hủy' />
-        </Tabs>
+        <div className='order-tabs'>
+          <Tabs
+            selectedKey={selected}
+            onSelectionChange={(key) => setSelected(key as string)}
+            color='primary'
+            className='min-w-max'
+          >
+            <Tab key='all' title='Tất cả' />
+            {Object.entries(statusConfig).map(([key, { text }]) => (
+              <Tab key={key} title={text} />
+            ))}
+          </Tabs>
+        </div>
 
         {filteredOrders.length === 0 ? (
-          <div className='mt-6 rounded-lg border border-gray-200 bg-white p-4'>
-            <p className='py-8 text-center text-[#A0A0A0]'>
-              Chưa có đơn hàng nào
-            </p>
+          <div className='empty-state'>
+            <p className='empty-text'>Chưa có đơn hàng nào</p>
           </div>
         ) : (
-          filteredOrders.slice(0, displayLimit).map((order) => (
-            <Card key={order?.id} className='mt-6'>
-              <CardBody>
-                <div className='flex items-start justify-between border-b border-default-100 pb-4'>
-                  <div className='space-y-1'>
-                    <div className='flex items-center gap-4 text-sm text-default-600'>
-                      <span>
-                        {order?.paymentDate
-                          ? new Date(order?.paymentDate)?.toLocaleDateString(
-                            'vi-VN',
-                            {
-                              year: 'numeric',
-                              month: '2-digit',
-                              day: '2-digit',
-                              hour: '2-digit',
-                              minute: '2-digit',
-                              hour12: false,
-                            }
-                          )
-                          : ''}
-                      </span>
-                      <span>Mã đơn hàng: {order?.maBill}</span>
-                      <span>
-                        {order?.detailCount != null ? order?.detailCount : 0}{' '}
-                        sản phẩm
-                      </span>
-                    </div>
-                  </div>
-                  <div className='flex flex-col items-end gap-2'>
-                    <div className='flex items-center gap-2 text-sm font-medium text-default-600'>
-                      <span
-                        style={{ color: statusConfig[order?.status]?.color }}
-                      >
-                        •
-                      </span>
-                      <span
-                        style={{ color: statusConfig[order?.status]?.color }}
-                      >
-                        {statusConfig[order?.status]?.text}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                {order?.billDetailResponesList?.[0] && (
-                  <div className='mt-4 flex items-center justify-between'>
-                    <div className='flex items-center gap-4'>
-                      <img
-                        src={
-                          order?.billDetailResponesList[0]?.productDetail?.image
-                        }
-                        alt={
-                          order?.billDetailResponesList[0]?.productDetail
-                            ?.productName
-                        }
-                        className='h-20 w-20 rounded-lg object-cover'
-                      />
-                      <div className='space-y-1'>
-                        <Link
-                          href={`/taikhoan/don-hang-cua-toi/thong-tin?id=${order?.id}`}
-                          className='text-sm font-medium hover:text-[#4c7eea]'
-                        >
-                          {order?.billDetailResponesList[0]?.productDetail
-                            ?.productName +
-                            ' ' +
-                            order?.billDetailResponesList[0]?.productDetail
-                              ?.ram +
-                            '/' +
-                            order?.billDetailResponesList[0]?.productDetail
-                              ?.rom +
-                            order?.billDetailResponesList[0]?.productDetail
-                              ?.descriptionRom +
-                            ' - ' +
-                            order?.billDetailResponesList[0]?.productDetail
-                              ?.color}{' '}
-                          <br />
-                        </Link>
-                        <p className='text-sm text-default-500'>
-                          Số lượng: {order?.billDetailResponesList[0]?.quantity}
-                        </p>
-                        <p className='text-sm font-bold'>
-                          {order?.billDetailResponesList[0]?.totalPrice?.toLocaleString(
-                            'vi-VN'
-                          )}{' '}
-                          đ
-                        </p>
-                      </div>
-                    </div>
-                    <div className='text-right'>
-                      <p className='text-lg font-bold text-red-500'>
-                        {order?.totalDue != null
-                          ? order?.totalDue?.toLocaleString('vi-VN')
-                          : 0}{' '}
-                        đ
-                      </p>
-                    </div>
-                  </div>
-                )}
-                {/* <div className='flex items-center gap-4'>
-                    <img
-                      src={order.billDetailResponesList[0].productDetail?.image}
-                      alt={order.name}
-                      className='h-20 w-20 rounded-lg object-cover'
-                    />
-                    <div>
-                      <p>{order.billDetailResponesList[0].productDetail?.productName}</p>
-                      <p>Số lượng: {order.billDetailResponesList[0].quantity}</p>
-                    </div>
-                  </div> */}
-
-                {/* <div className='mt-4 flex items-center justify-between border-t border-default-100 pt-4'>
-                  <p className='text-sm text-default-600'>
-                    Bạn cần hỗ trợ? Liên hệ ngay với chúng tôi.
-                  </p>
-                  <Button
-                    color='danger'
-                    variant='solid'
-                    startContent={<Icon icon='lucide:headphones' />}
-                    className='bg-[#4072dd] hover:bg-[#3b6bc4] text-white rounded-lg px-4 py-2'
-                  >
-                    Hỗ trợ
-                  </Button>
-                </div> */}
-              </CardBody>
-            </Card>
-          ))
-        )}
-        {filteredOrders.length > displayLimit && (
-          <div className='mt-6 flex justify-center'>
-            <Button
-              variant='outline'
-              onClick={() => setDisplayLimit((prev) => prev + 2)}
-              className='px-8'
-            >
-              Xem thêm
-            </Button>
-          </div>
+          <>
+            {filteredOrders.slice(0, displayLimit).map(renderOrderCard)}
+            {filteredOrders.length > displayLimit && (
+              <div className='load-more'>
+                <Button
+                  variant='outline'
+                  onClick={() => setDisplayLimit((prev) => prev + 5)}
+                  className='load-more-button'
+                >
+                  Xem thêm
+                </Button>
+              </div>
+            )}
+          </>
         )}
       </section>
     </div>

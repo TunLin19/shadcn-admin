@@ -55,7 +55,7 @@ const CustomerChat = ({ isOpen, toggleChat }) => {
     const client = new Client({
       webSocketFactory: () => socket,
       connectHeaders: { Authorization: `Bearer ${jwt}` },
-      debug: (str) => console.log(str),
+      // debug: (str) => console.log(str),
     })
 
     client.onConnect = () => {
@@ -65,10 +65,8 @@ const CustomerChat = ({ isOpen, toggleChat }) => {
         senderId < receiverId
           ? `${senderId}_${receiverId}`
           : `${receiverId}_${senderId}`
-      console.log(`Subscribing to /topic/messages/${conversationId}`)
       client.subscribe(`/topic/messages/${conversationId}`, (message) => {
         const newMessage = JSON.parse(message.body)
-        console.log('Received message:', newMessage)
         setMessages((prev) => {
           const updatedMessages = prev.map((msg) =>
             msg.id === newMessage.id
@@ -178,9 +176,6 @@ const CustomerChat = ({ isOpen, toggleChat }) => {
           destination: '/app/chat/status',
           body: JSON.stringify(statusUpdate),
         })
-        console.log(
-          `Sent status update: messageId=${messageId}, status=${status}`
-        )
       } catch (error) {
         toast.error('Lỗi khi cập nhật trạng thái: ' + error.message)
         console.error('Lỗi cập nhật trạng thái:', error)
