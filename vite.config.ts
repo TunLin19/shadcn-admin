@@ -6,6 +6,20 @@ import { TanStackRouterVite } from '@tanstack/router-plugin/vite'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), TanStackRouterVite()],
+  build: {
+    outDir: 'dist',
+    sourcemap: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          // Split large dependencies into separate chunks
+          mui: ['@mui/material', '@mui/icons-material'],
+          antd: ['antd', '@ant-design/charts']
+        }
+      }
+    }
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),

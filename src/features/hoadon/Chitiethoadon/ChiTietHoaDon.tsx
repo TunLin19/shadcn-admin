@@ -65,7 +65,6 @@ interface Voucher {
 
 
 import { OrderStatus } from './components/TrangThaiDonHangGiaoHang';
-import TasksProvider from '@/features/tasks/context/tasks-context';
 import { BillRespones } from '@/features/banhang/service/Schema';
 
 import TableHoaDonChiTiet from './components/TableHoaDonChiTiet';
@@ -356,7 +355,6 @@ const ChiTietHoaDon: React.FC = () => {
                     <a href="/hoadon" className='text-sm text-blue-600'>Quản lý hóa đơn</a>
                     <a href="/hoadon/hoadonchitiet" className='text-sm text-cyan-600'>{' > '}chi tiết đơn hàng</a>
                 </div>
-                <TasksProvider>
                     <Header>
                         <Search />
                         <div className="ml-auto flex items-center space-x-4">
@@ -364,7 +362,6 @@ const ChiTietHoaDon: React.FC = () => {
                             <ProfileDropdown />
                         </div>
                     </Header>
-                </TasksProvider>
             </div>
             <Main>
 

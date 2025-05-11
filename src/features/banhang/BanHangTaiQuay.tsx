@@ -6,7 +6,6 @@ import { Main } from '@/components/layout/main'
 import { ProfileDropdown } from '@/components/profile-dropdown'
 import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
-import TasksProvider from '../tasks/context/tasks-context'
 import BarcodeScannerModal from './components/components_con/BarcodeScannerModal'
 import DiaChiGiaoHang from './components/components_con/DiaChiGiaoHang'
 import HoaDonCho from './components/HoaDonCho'
@@ -716,7 +715,6 @@ function BanHangTaiQuay() {
   return (
     <>
       <div>
-        <TasksProvider>
           <Header>
             <Search />
             <div className='ml-auto flex items-center space-x-4'>
@@ -724,7 +722,6 @@ function BanHangTaiQuay() {
               <ProfileDropdown />
             </div>
           </Header>
-        </TasksProvider>
       </div>
       <br />
       <div
