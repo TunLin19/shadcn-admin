@@ -17,7 +17,7 @@ import Ship from './ship'
 import type { CartItem, Voucher } from './types/cart'
 
 // Thay thế MOCK_VOUCHERS bằng danh sách voucher thực tế từ API của bạn
-const MOCK_VOUCHERS: Voucher[] = await getVoucher()
+let MOCK_VOUCHERS: Voucher[] = []
 interface OrderSummaryProps {
   onCheckout: () => void
   products: CartItem[]
@@ -58,6 +58,17 @@ export function OrderSummary({
     (sum, item) => sum + item.priceSell * item.quantity,
     0
   )
+  useEffect(() => {
+    const loadVouchers = async () => {
+      try {
+        MOCK_VOUCHERS = await getVoucher()
+      } catch (error) {
+        console.error('Error loading vouchers:', error)
+      }
+    }
+    
+    loadVouchers()
+  }, [])
 
   // Chọn voucher có giá trị cao nhất mặc định có thể áp dụng
   useEffect(() => {
