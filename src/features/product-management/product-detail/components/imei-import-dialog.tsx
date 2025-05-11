@@ -7,11 +7,12 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Input } from '@/components/ui/input'
 import { addQuantityProductDetail } from '../data/api-service'
 import { Route } from '@/routes/_authenticated/route'
+import { ProductDetailResponse } from '../data/schema'
 
 interface ImeiImportDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
-  currentRow: any
+  currentRow: ProductDetailResponse
 }
 
 export const ImeiImportDialog: React.FC<ImeiImportDialogProps> = ({
@@ -43,7 +44,7 @@ export const ImeiImportDialog: React.FC<ImeiImportDialogProps> = ({
       onOpenChange(false)
       setFile(null)
     },
-    onError: (error: any) => {
+    onError: (error) => {
       toast({
         title: 'Lỗi',
         description: error.message || 'Không thể thêm IMEI',

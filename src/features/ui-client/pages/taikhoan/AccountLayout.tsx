@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useRouter } from '@tanstack/react-router';
-import { button, Card } from '@heroui/react';
+import { Card } from '@heroui/react';
 import { Icon } from '@iconify/react';
 import Cookies from 'js-cookie';
 

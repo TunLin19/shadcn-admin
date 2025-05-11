@@ -7,11 +7,10 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { Contact, ContactType } from '../types'
+import { Contact } from '../types'
 import { getContactTypeStyle, getContactStatusStyle } from '../utils/contact-styles'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
-import { format } from 'date-fns'
 import { Icon } from '@iconify/react'
 import { cn } from '@/lib/utils'
 import { IconEye } from '@tabler/icons-react'

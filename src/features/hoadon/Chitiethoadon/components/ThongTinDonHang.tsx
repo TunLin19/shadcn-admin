@@ -1,4 +1,4 @@
-import { BillRespones, BillSchema } from '@/features/banhang/service/Schema';
+import { BillRespones} from '@/features/banhang/service/Schema';
 import React, { useState } from 'react';
 import { format } from "date-fns";
 import { Button } from '@/components/ui/button';

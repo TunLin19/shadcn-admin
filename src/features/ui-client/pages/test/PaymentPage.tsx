@@ -4,7 +4,6 @@ import { useNavigate } from '@tanstack/react-router'
 import { IconLoader2 } from '@tabler/icons-react'
 import { Route as PaymentRoute } from '@/routes/(auth)/dat-hang/payment-result.lazy'
 import { toast } from '@/hooks/use-toast'
-import { Card } from '@/components/ui/card'
 import { order } from '../../data/api-cart-service'
 
 export function PaymentResultPage() {

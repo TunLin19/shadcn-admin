@@ -1,6 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import SaveAsIcon from '@mui/icons-material/SaveAs';
 import {
     getVouchers,
     VoucherSearchParams,

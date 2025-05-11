@@ -9,7 +9,7 @@ import {
   DropdownTrigger,
   User,
 } from '@heroui/react'
-import { Menu, Search, ShoppingCart, X } from 'lucide-react'
+import { Menu,ShoppingCart } from 'lucide-react'
 import { getBrandActive } from '@/features/product-management/product/data/api-service'
 import { cn } from '../../../lib/utils'
 import { getProfile } from '../data/api-service'
@@ -17,7 +17,6 @@ import { Profile } from '../data/schema'
 import { useCart } from '../hooks/use-cart'
 import { Badge } from './ui/badge'
 import { Button } from './ui/button'
-import { Input } from './ui/input'
 import {
   NavigationMenu,
   NavigationMenuContent,

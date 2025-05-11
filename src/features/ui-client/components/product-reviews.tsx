@@ -1,10 +1,9 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardBody, Avatar, Progress } from '@heroui/react';
 import { Icon } from '@iconify/react';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import DanhGiaSanPham from './danh-gia/danh-gia-san-pham';
 import { productDetailViewResponse } from '../data/schema';
-import Cookies from 'js-cookie';
 
 export interface Review {
   id: number;

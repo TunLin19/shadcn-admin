@@ -1,4 +1,4 @@
-import TasksProvider from '../tasks/context/tasks-context';
+
 import { Header } from '@/components/layout/header';
 import { Search } from '@/components/search';
 import { ThemeSwitch } from '@/components/theme-switch';
@@ -33,7 +33,7 @@ const QuanLyHoaDon: React.FC = () => {
     return (
         <>
             <div>
-                <TasksProvider>
+                
                     <Header>
                         <Search />
                         <div className="ml-auto flex items-center space-x-4">
@@ -41,7 +41,7 @@ const QuanLyHoaDon: React.FC = () => {
                             <ProfileDropdown />
                         </div>
                     </Header>
-                </TasksProvider>
+                
             </div>
             <Main>
                 <div>

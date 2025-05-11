@@ -1,4 +1,4 @@
-import React from "react";
+
 import { Image } from "@heroui/react";
 import type { CartItem } from "./types/cart";
 

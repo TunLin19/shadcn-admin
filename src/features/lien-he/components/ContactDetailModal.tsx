@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import { Contact, ContactType } from '../types'
+import { Contact } from '../types'
 import { getContactTypeStyle, getContactStatusStyle } from '../utils/contact-styles'
 import { cn } from '@/lib/utils'
 import { format } from 'date-fns'

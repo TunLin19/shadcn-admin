@@ -8,8 +8,7 @@ import {
     findImeiByIdProductDaBan, findBill,
     findImeiById,
     addBillDetailAndCreateImeiSold, deleteProduct, getImei,
-    getProductDetail, getByIdBillDetail, getVoucherDangSuDung,
-    updateImeiSold,
+    getProductDetail, getByIdBillDetail,
     addBillHistory,
 
 } from '@/features/hoadon/service/HoaDonService';

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { BillRespones } from '../../service/Schema';
 import { format } from 'date-fns';
-import { fromThanhCong, fromThatBai } from './ThongBao';
+import { fromThatBai } from './ThongBao';
 interface Props {
   searchBill: BillRespones | undefined;
   tongTien: number;

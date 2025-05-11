@@ -18,9 +18,7 @@ export function DataTableRowActions<TData>({
 
   const handleViewClick = () => {
     try {
-      console.log('Row data:', row.original)
       const product = productResponseSchema.parse(row.original)
-      console.log('Parsed product:', product) // Log the parsed product for debugging
       setCurrentRow(product)
       setOpen('display')
     } catch (error) {

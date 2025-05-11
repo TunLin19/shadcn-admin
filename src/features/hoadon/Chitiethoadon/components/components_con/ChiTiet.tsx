@@ -12,7 +12,7 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 import { BillRespones } from '@/features/banhang/service/Schema';
-import { CreditCard, CheckCircle, Truck, Clock, RefreshCw, XCircle, WalletCards, PackageSearch, PackageOpen, BadgeCheck, ClipboardCheck, Hourglass, XOctagon } from "lucide-react";
+import { RefreshCw, XCircle, WalletCards, PackageSearch, PackageOpen, BadgeCheck, ClipboardCheck, Hourglass, XOctagon } from "lucide-react";
 import { cn } from '@/lib/utils';
 
 interface ChiTietPros {

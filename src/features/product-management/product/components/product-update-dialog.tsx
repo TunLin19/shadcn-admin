@@ -62,7 +62,7 @@ export function ProductResponsesUpdateDialog({
       queryClient.invalidateQueries({ queryKey: ['products'] })
       onOpenChange(false)
     },
-    onError: (error: any) => {
+    onError: (error) => {
       toast({
         title: 'Thất bại',
         description:

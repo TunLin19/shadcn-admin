@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react"
-import { getSales, updateSale, createSale, searchSales, addProductDetailToSale } from "./data/apiSale"
+import { getSales, updateSale, createSale, searchSales} from "./data/apiSale"
 import { toast } from "@/hooks/use-toast"
 import axios from 'axios'
-import { IconEdit } from "@tabler/icons-react" // Remove IconEye
 import { Checkbox } from "@/components/ui/checkbox"
 import { toServerDateTime, fromServerDateTime, toInputDateTime } from '@/utils/datetime'
 import Cookies from "js-cookie"
