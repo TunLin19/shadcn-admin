@@ -34,11 +34,11 @@ export function CartPage() {
   const handleProceedToCheckout = async () => {
     try {
       // Get selected cart item IDs
-      const selectedIds = selectedProducts.map(cartdetail => cartdetail.id)
+      const selectedIds = selectedProducts.map((cartdetail) => cartdetail.id)
       console.log('Selected IDs:', selectedIds)
       // Check cart items availability
       await checkCartDetail(selectedIds)
-  
+
       // If all items are available, proceed to checkout
       navigate({
         to: '/dat-hang',
@@ -62,7 +62,9 @@ export function CartPage() {
       ) {
         Cookies.remove('jwt')
         localStorage.removeItem('profile')
-        window.location.href = '/sign-in'
+        navigate({
+          to: '/sign-in',
+        })
       }
     }
   }
@@ -187,7 +189,7 @@ export function CartPage() {
                   onPress={handleProceedToCheckout}
                   onMouseEnter={() => {
                     if (selectedProducts.length > 0) {
-                      refreshCart(); 
+                      refreshCart()
                     }
                   }}
                   isDisabled={selectedProducts.length === 0}

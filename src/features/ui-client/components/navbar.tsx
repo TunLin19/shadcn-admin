@@ -140,7 +140,9 @@ export default function Navbar() {
             onClick={() => {
               Cookies.remove('jwt')
               localStorage.removeItem('profile')
-              window.location.href = '/sign-in'
+              navigate({
+                to: '/sign-in',
+              })
             }}
           >
             Đăng xuất

@@ -1,6 +1,6 @@
 import React from 'react'
 import Cookies from 'js-cookie'
-import { Link, useRouter } from '@tanstack/react-router'
+import { Link, useNavigate, useRouter } from '@tanstack/react-router'
 import { Card } from '@heroui/react'
 import { Icon } from '@iconify/react'
 import '@/features/ui-client/styles/account.css'
@@ -11,7 +11,7 @@ interface AccountLayoutProps {
 
 export const AccountLayout: React.FC<AccountLayoutProps> = ({ children }) => {
   const router = useRouter()
-
+  const navigate = useNavigate()
   const menuItems = [
     {
       icon: 'lucide:user',
@@ -30,7 +30,9 @@ export const AccountLayout: React.FC<AccountLayoutProps> = ({ children }) => {
       action: () => {
         Cookies.remove('jwt')
         localStorage.removeItem('profile')
-        window.location.href = '/'
+        navigate({
+                to: '/',
+              })
       },
     },
   ]

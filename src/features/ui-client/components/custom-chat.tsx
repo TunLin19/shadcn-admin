@@ -7,6 +7,7 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import SockJS from 'sockjs-client'
 import { getProfile } from '../data/api-service'
+import { useNavigate } from '@tanstack/react-router'
 
 const CustomerChat = ({ isOpen, toggleChat }) => {
   const [messages, setMessages] = useState([])
@@ -17,6 +18,7 @@ const CustomerChat = ({ isOpen, toggleChat }) => {
   const [senderId, setSenderId] = useState(null)
   const receiverId = 2 // ID admin
   const jwt = Cookies.get('jwt')
+  const navigate = useNavigate()
 
   const fetchChatHistory = async (userId:number) => {
     try {
@@ -86,7 +88,9 @@ const CustomerChat = ({ isOpen, toggleChat }) => {
       setIsWebSocketConnected(false)
       if (frame.headers['message'].includes('Unauthorized')) {
         toast.error('Phiên đăng nhập hết hạn. Vui lòng đăng nhập lại!')
-        window.location.href = '/sign-in'
+        navigate({
+                to: '/sign-in',
+              })
       } else {
         toast.error('Lỗi kết nối WebSocket: ' + frame.headers['message'])
       }
@@ -110,7 +114,9 @@ const CustomerChat = ({ isOpen, toggleChat }) => {
     if (!jwt) {
       toast.error('Vui lòng đăng nhập để sử dụng chat!', {
         onClick: () => {
-          window.location.href = '/sign-in'
+          navigate({
+                to: '/sign-in',
+              })
         },
       })
       return

@@ -1,4 +1,4 @@
-import { Link } from '@tanstack/react-router'
+import { Link, useNavigate } from '@tanstack/react-router'
 import {
   BadgeCheck,
   Bell,
@@ -36,7 +36,7 @@ export function NavUser({
   }
 }) {
   const { isMobile } = useSidebar()
-
+  const navigate = useNavigate()
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -108,7 +108,9 @@ export function NavUser({
           onClick={() => {
             Cookies.remove('jwt')
             localStorage.removeItem('profile')
-            window.location.href = '/sign-in'
+            navigate({
+                to: '/sign-in',
+              })
           }}
         >
           Đăng xuất

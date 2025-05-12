@@ -11,11 +11,12 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { getProfile } from '@/features/ui-client/data/api-service'
 import { Profile } from '@/features/ui-client/data/schema'
-import { Link } from '@tanstack/react-router'
+import { Link, useNavigate } from '@tanstack/react-router'
 import Cookies from 'js-cookie'
 import { useEffect, useState } from 'react'
 
 export function ProfileDropdown() {
+  const navigate = useNavigate()
   const [profile, setProfile] = useState<Profile | null>(null)
   useEffect(() => {
     loadProfile()
@@ -74,7 +75,9 @@ export function ProfileDropdown() {
           onClick={() => {
             Cookies.remove('jwt')
             localStorage.removeItem('profile')
-            window.location.href = '/sign-in'
+            navigate({
+                to: '/sign-in',
+              })
           }}
         >
           Đăng xuất
