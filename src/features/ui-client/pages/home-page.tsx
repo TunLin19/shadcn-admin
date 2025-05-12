@@ -5,6 +5,7 @@ import HeroSection from '../components/hero-section'
 import Navbar from '../components/navbar'
 import { useEffect, useState } from 'react'
 import CustomerChat from '../components/custom-chat'
+import ChatBotAi from '@/features/chatbot/chat-bot-ai'
 
 export default function HomePage() {
   useEffect(() => {
@@ -24,6 +25,7 @@ export default function HomePage() {
         isOpen={isCustomerChatOpen}
         toggleChat={() => setIsCustomerChatOpen(!isCustomerChatOpen)}
       />
+      <ChatBotAi />
         <Categories />
       </main>
       <Footer />
