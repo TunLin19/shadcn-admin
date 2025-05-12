@@ -41,6 +41,7 @@ export default defineConfig({
       },
     },
   },
+  base: 'https://hopestar.vercel.app',
   define: {
     global: 'window', // Ánh xạ global thành window
   },
