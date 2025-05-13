@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { toast } from '@/hooks/use-toast'
 import { Bill } from '../taikhoan/service/schema';
+import { useNavigate } from '@tanstack/react-router';
 const TraCuu: React.FC = () => {
   const [maDonHang, setMaDonHang] = useState(""); // Lưu mã đơn hàng
   const [bill, setBill] = useState<Bill | null>(null);
-
+  const navigate = useNavigate()
   const traCuuDonHang = async () => {
     if (!maDonHang.trim()) {
       toast({
@@ -38,7 +39,10 @@ const TraCuu: React.FC = () => {
       
       // Nếu mã hóa đơn hợp lệ, lưu mã và chuyển hướng
       localStorage.setItem("ma-don-hang", maDonHang);
-      window.location.href = `/tra_cuu_don_hang/thong-tin`;
+      navigate({
+                to: '/tra_cuu_don_hang/thong-tin',
+              })
+      // window.location.href = `/tra_cuu_don_hang/thong-tin`;
     } catch (error) {
       alert(error.message || "Có lỗi xảy ra, vui lòng thử lại!");
     }
